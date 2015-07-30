@@ -1,0 +1,2 @@
+salt-run --force-color -l debug -t 1800 state.orchestrate opennebula.orchestration saltenv='example_org' 2>&1 |tee -a /var/log/salt.run.opennebulaorchestrate.log
+
