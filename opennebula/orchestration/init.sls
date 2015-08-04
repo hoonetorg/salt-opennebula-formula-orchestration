@@ -33,29 +33,29 @@ orchestration_opennebula__install_mariadb:
       - salt: orchestration_opennebula__controller_finished
       - salt: orchestration_opennebula__compute_nodes_finished
 
-orchestration_opennebula__create_database:
-  salt.state:
-    - tgt: {{opennebula_controllers}}
-    - tgt_type: list
-    - expect_minions: True
-    - sls: mysql.database
-    - require:
-      - salt: orchestration_opennebula__install_mariadb
-    - require_in:
-      - salt: orchestration_opennebula__controller_finished
-      - salt: orchestration_opennebula__compute_nodes_finished
-
-orchestration_opennebula__db_user_and_grants:
-  salt.state:
-    - tgt: {{opennebula_controllers}}
-    - tgt_type: list
-    - expect_minions: True
-    - sls: mysql.user
-    - require:
-      - salt: orchestration_opennebula__create_database
-    - require_in:
-      - salt: orchestration_opennebula__controller_finished
-      - salt: orchestration_opennebula__compute_nodes_finished
+#orchestration_opennebula__create_database:
+#  salt.state:
+#    - tgt: {{opennebula_controllers}}
+#    - tgt_type: list
+#    - expect_minions: True
+#    - sls: mysql.database
+#    - require:
+#      - salt: orchestration_opennebula__install_mariadb
+#    - require_in:
+#      - salt: orchestration_opennebula__controller_finished
+#      - salt: orchestration_opennebula__compute_nodes_finished
+#
+#orchestration_opennebula__db_user_and_grants:
+#  salt.state:
+#    - tgt: {{opennebula_controllers}}
+#    - tgt_type: list
+#    - expect_minions: True
+#    - sls: mysql.user
+#    - require:
+#      - salt: orchestration_opennebula__create_database
+#    - require_in:
+#      - salt: orchestration_opennebula__controller_finished
+#      - salt: orchestration_opennebula__compute_nodes_finished
 
 orchestration_opennebula__install_controller:
   salt.state:
@@ -64,7 +64,7 @@ orchestration_opennebula__install_controller:
     - expect_minions: True
     - sls: opennebula.controller
     - require:
-      - salt: orchestration_opennebula__db_user_and_grants
+      - salt: orchestration_opennebula__install_mariadb
     - require_in:
       - salt: orchestration_opennebula__controller_finished
       - salt: orchestration_opennebula__compute_nodes_finished
